@@ -1,0 +1,49 @@
+#!/bin/bash
+
+funkcia1 ()
+{
+NP1=$(cat /var/www/html/reg.frekvencie/reg.Pmax.txt)
+VYK=$(cat /var/www/html/reg.frekvencie/graf/aktualny-vykon.txt )
+echo $VYK
+if [[ "$VYK" -ge "$NP1" ]] ; then
+date
+echo Odoberaný výkon je vyšší ako nastavených $NP1 kW vypínam odber
+/home/palo/www/html/reg.frekvencie/prepni-200MHz.sh
+# curl "http://10.20.10.250/sdscep?p=0&sys145=1"
+echo vypnutý
+sleep 20
+else
+date
+echo Výkon $VYK kW je nižší ako mastavené maximum
+sleep 5
+fi;
+
+
+funkcia2
+}
+
+funkcia2 ()
+{
+NP2=$(cat /var/www/html/reg.frekvencie/reg.Pmin.txt)
+VYK=$(cat /var/www/html/reg.frekvencie/graf/aktualny-vykon.txt )
+echo $VYK
+if [[ "$VYK" -le "$NP2" ]] ; then
+date
+echo Odoberaný výkon je nižší ako nastavených $NP2 kW zapínam odber
+/home/palo/www/html/reg.frekvencie/prepni-575MHz.sh
+
+#curl "http://10.20.10.250/sdscep?p=0&sys145=2"
+echo zapnutý
+sleep 20
+
+else
+date
+echo Výkon $VYK kW je vyšší ako nastavené minimum
+sleep 5
+
+fi;
+funkcia1
+}
+
+funkcia2
+funkcia1

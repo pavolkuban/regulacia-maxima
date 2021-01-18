@@ -13,8 +13,8 @@ VYK3=$(echo "scale=2; (((3600000)/$IMP3)/1000)" | bc)
 VYK=$(echo " (($VYK1+$VYK2+$VYK3)*1.03)" | bc | sed 's/\./\n/' | head -n 1 )
 
 echo odber EUB $VYK1 kW
-echo odber Oles $VYK2 kW
-echo odber Jaško $VYK3 kW
+echo odber prvy $VYK2 kW
+echo odber druhy $VYK3 kW
 echo $VYK
 echo $VYK > ./aktualny-vykon.txt
 
